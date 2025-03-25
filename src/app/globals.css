@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f3f4f6;
   --foreground: #171717;
 }
 
@@ -12,9 +12,15 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@layer base {
+  .nav-link {
+    @apply hover:underline decoration-1 font-medium md:hover:text-cyan-500 md:hover:decoration-cyan-500 transition duration-300 max-md:py-3 max-md:hover:bg-neutral-200 max-md:px-8; 
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #272727;
     --foreground: #ededed;
   }
 }

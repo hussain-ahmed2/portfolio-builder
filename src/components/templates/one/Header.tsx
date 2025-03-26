@@ -2,14 +2,14 @@
 
 import { Menu } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Header({
 	logo = "Portfolio",
 	navigation = [
 		{
 			name: "Home",
-			href: "/",
+			href: "#home",
 		},
 		{
 			name: "About",
@@ -31,6 +31,7 @@ export default function Header({
 		href: string;
 	}[];
 }) {
+	const [activeLink, setActiveLink] = useState<string>("#home");
 	const [open, setOpen] = useState<boolean>(false);
 
 	function handleToggle() {
@@ -43,12 +44,35 @@ export default function Header({
 		}
 	}
 
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						setActiveLink(`#${entry.target.id}`);
+					}
+				});
+			},
+			{
+				threshold: 0.1,
+			}
+		);
+
+		document.querySelectorAll("section").forEach((link) => {
+			observer.observe(link);
+		});
+
+		return () => {
+			observer.disconnect();
+		};
+	}, []);
+
 	return (
-		<header className="border-b border-neutral-200 bg-white">
-			<nav className="flex min-h-16 items-center justify-between">
+		<header className="border-b border-neutral-200 bg-white fixed w-full">
+			<nav className="flex min-h-16 items-center justify-between max-w-7xl mx-auto">
 				<Link
 					onClick={handleClose}
-					href="/"
+					href="#"
 					className="px-8 font-extrabold text-2xl text-emerald-500"
 				>
 					{logo}
@@ -67,7 +91,7 @@ export default function Header({
 								onClick={handleClose}
 								key={index}
 								href={`/${item.href.toLowerCase()}`}
-								className="nav-link"
+								className={`nav-link ${activeLink === item.href ? "text-emerald-500 decoration-emerald-500" : ""}`}
 							>
 								{item.name}
 							</Link>

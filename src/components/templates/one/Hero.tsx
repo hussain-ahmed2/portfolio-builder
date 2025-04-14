@@ -1,6 +1,6 @@
 export default function Hero({
     name = "John Doe",
-    description = "I create amazing web applications with React, TypeScript, and TailwindCSS."
+    description = "I create amazing web applications with React, TypeScript, and Tailwind CSS."
 }: {
     name?: string
     description?: string

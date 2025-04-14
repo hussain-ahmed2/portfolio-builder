@@ -1,9 +1,9 @@
-import One from "@/components/templates/one/One";
+import Base from '@/components/templates/base/Base';
 
 export default function Home() {
 	return (
-		<div>
-			<One />
-		</div>
+		<>
+			<Base />
+		</>
 	);
 }
